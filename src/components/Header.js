@@ -1,7 +1,13 @@
-import { Heading, Link, Button, Flex, Avatar } from "@chakra-ui/react";
+import { Heading, Link, Flex, Avatar } from "@chakra-ui/react";
+import { signOut } from "@firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
+import { auth } from "../firebase";
 
 export const Header = () => {
+  const handleLogout = () => {
+    signOut(auth);
+  };
+
   return (
     <Flex
       justify="space-between"
@@ -16,12 +22,17 @@ export const Header = () => {
         </Heading>
       </Link>
 
-      <Flex align="center" gridGap="4">
-        <Button colorScheme="teal" size="md">
-          Cerrar Sesion
-        </Button>
-        <Avatar bg="teal.500" size="md" />
-      </Flex>
+      {auth?.currentUser?.displayName && (
+        <Flex align="center" gridGap="4" className="header__avatar">
+          <Heading as="h5" size="md" color="whitesmoke">
+            {auth.currentUser.displayName}
+          </Heading>
+          <Avatar bg="teal.500" size="md" onClick={handleLogout} />
+          <span className="logout" onClick={handleLogout}>
+            Cerrar Sesion
+          </span>
+        </Flex>
+      )}
     </Flex>
   );
 };

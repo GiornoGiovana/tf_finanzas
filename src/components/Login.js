@@ -2,10 +2,13 @@ import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Center, Container, Heading, Link } from "@chakra-ui/layout";
-import { Link as RouterLink } from "react-router-dom";
+import { signInWithEmailAndPassword } from "@firebase/auth";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 import { useForm } from "../hooks/useForm";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [state, handleChange] = useForm({
     correo: "",
     password: "",
@@ -13,8 +16,12 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Correo: ", state.correo);
-    console.log("Password: ", state.password);
+    signInWithEmailAndPassword(auth, state.correo, state.password)
+      .then((userCredential) => {
+        console.log("User logged: ", userCredential);
+        navigate("/");
+      })
+      .catch((error) => alert(error.message));
   };
 
   return (

@@ -3,11 +3,35 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Center, Flex, Heading, HStack } from "@chakra-ui/layout";
 import { Radio, RadioGroup } from "@chakra-ui/radio";
+import { addDoc, collection } from "@firebase/firestore";
+import { useState } from "react";
+import { db } from "../firebase";
+import { useForm } from "../hooks/useForm";
 
 export const Factura = () => {
-  const handleSubmit = (e) => {
+  const [moneda, setMoneda] = useState("pen");
+  const [facturaFields, handleChange] = useForm({
+    rucEmpresa: "",
+    razonSocial: "",
+    numeroFactura: "",
+    valorNominal: "",
+    fechaEmision: "",
+    fechaPago: "",
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Factura enviada");
+    try {
+      await addDoc(collection(db, "facturas"), {
+        ...facturaFields,
+        rucEmpresa: parseInt(facturaFields.rucEmpresa),
+        numeroFactura: parseInt(facturaFields.numeroFactura),
+        valorNominal: parseInt(facturaFields.valorNominal),
+        moneda,
+      });
+    } catch (error) {
+      console.error(e);
+    }
   };
 
   return (
@@ -17,24 +41,40 @@ export const Factura = () => {
         <form>
           <FormControl isRequired mt="2">
             <FormLabel>RUC de la Empresa</FormLabel>
-            <Input />
+            <Input
+              name="rucEmpresa"
+              value={facturaFields.rucEmpresa}
+              onChange={handleChange}
+            />
           </FormControl>
           <FormControl isRequired mt="2">
             <FormLabel>Razon Social</FormLabel>
-            <Input />
+            <Input
+              name="razonSocial"
+              value={facturaFields.razonSocial}
+              onChange={handleChange}
+            />
           </FormControl>
           <FormControl isRequired mt="2">
             <FormLabel>Numero de Factura</FormLabel>
-            <Input />
+            <Input
+              name="numeroFactura"
+              value={facturaFields.numeroFactura}
+              onChange={handleChange}
+            />
           </FormControl>
           <FormControl isRequired mt="2">
             <FormLabel>Valor Nominal</FormLabel>
-            <Input />
+            <Input
+              name="valorNominal"
+              value={facturaFields.valorNominal}
+              onChange={handleChange}
+            />
           </FormControl>
 
           <FormControl as="fieldset" mt="2">
             <FormLabel as="legend">Moneda</FormLabel>
-            <RadioGroup defaultValue="pen">
+            <RadioGroup value={moneda} onChange={(val) => setMoneda(val)}>
               <HStack spacing="24px">
                 <Radio value="pen">PEN</Radio>
                 <Radio value="usd">USD</Radio>
@@ -45,11 +85,21 @@ export const Factura = () => {
           <HStack mt="2">
             <FormControl>
               <FormLabel>Fecha de emision</FormLabel>
-              <Input type="date" />
+              <Input
+                type="date"
+                name="fechaEmision"
+                value={facturaFields.fechaEmision}
+                onChange={handleChange}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Fecha de pago</FormLabel>
-              <Input type="date" />
+              <Input
+                type="date"
+                name="fechaPago"
+                value={facturaFields.fechaPago}
+                onChange={handleChange}
+              />
             </FormControl>
           </HStack>
 

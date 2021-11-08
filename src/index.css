@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.header__avatar {
+  position: relative;
+}
+
+.header__avatar span {
+  cursor: pointer;
+}
+
+.logout {
+  position: absolute;
+  background: gray;
+  padding: 0.25rem 1rem;
+  border-radius: 6px;
+  visibility: hidden; 
+  opacity: 0;
+  top: 105%;
+  left: 50%;
+  white-space: nowrap;
+}
+
+.header__avatar:hover .logout {
+  visibility: visible;
+  opacity: .5;
+}

@@ -3,9 +3,13 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Center, Container, Grid, Heading, Link } from "@chakra-ui/layout";
 import { useForm } from "../hooks/useForm";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
+import { auth, db } from "../firebase";
+import { addDoc, collection } from "@firebase/firestore";
 
 export const Signup = () => {
+  const navigate = useNavigate();
   const [state, handleChange] = useForm({
     nombre: "",
     apellido: "",
@@ -18,7 +22,27 @@ export const Signup = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log("Datos de usuario: ", state);
+    createUserWithEmailAndPassword(auth, state.correo, state.password)
+      .then(async (userCredential) => {
+        updateProfile(auth.currentUser, {
+          displayName: state.nombre + " " + state.apellido,
+        });
+        console.log("User: ", userCredential);
+        try {
+          const docRef = await addDoc(collection(db, "users"), {
+            userId: userCredential.user.uid,
+            born: state.fechaNac,
+            dni: parseInt(state.dni),
+            ruc: parseInt(state.ruc),
+          });
+          if (docRef.id) {
+            navigate("/");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      })
+      .catch((error) => alert(error.message));
   };
 
   return (
