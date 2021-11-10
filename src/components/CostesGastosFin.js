@@ -12,19 +12,18 @@ export const CostesGastosFin = () => {
       </Heading>
       <FormControl>
         <FormLabel>Motivo Final Tipo</FormLabel>
-        <Select placeholder="Motivo Inicial Tipo">
+        <Select defaultValue="portes">
           <option value="portes">Portes</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          <option value="gastosAdmin">Gastos de administración</option>
+          <option value="otrosGastos">Otros gastos</option>
         </Select>
       </FormControl>
       <HStack>
         <FormControl>
           <FormLabel>Motivo Final Valor</FormLabel>
-          <Select placeholder="Motivo Final Valor">
+          <Select defaultValue="efectivo">
             <option value="efectivo">En Efectivo</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            <option value="porcentaje">En Porcentaje</option>
           </Select>
         </FormControl>
         <FormControl isRequired>

@@ -10,8 +10,8 @@ export const TCEA = () => {
     <Center pt="4">
       <form>
         <Grid templateColumns="repeat(2, 370px)" gap={4}>
-          <CalculadorFacturas />
           <DatosFactura />
+          <CalculadorFacturas />
           <CostesGastosIni />
           <CostesGastosFin />
         </Grid>

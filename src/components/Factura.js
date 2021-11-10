@@ -3,6 +3,7 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Center, Flex, Heading, HStack } from "@chakra-ui/layout";
 import { Radio, RadioGroup } from "@chakra-ui/radio";
+import { Select } from "@chakra-ui/select";
 import { addDoc, collection } from "@firebase/firestore";
 import { useState } from "react";
 import { db } from "../firebase";
@@ -36,7 +37,7 @@ export const Factura = () => {
 
   return (
     <Center>
-      <Flex direction="column" mt="2">
+      <Flex width="65%" direction="column">
         <Heading color="teal.300">Ingresar Factura</Heading>
         <form>
           <FormControl isRequired mt="2">
@@ -72,15 +73,26 @@ export const Factura = () => {
             />
           </FormControl>
 
-          <FormControl as="fieldset" mt="2">
-            <FormLabel as="legend">Moneda</FormLabel>
-            <RadioGroup value={moneda} onChange={(val) => setMoneda(val)}>
-              <HStack spacing="24px">
-                <Radio value="pen">PEN</Radio>
-                <Radio value="usd">USD</Radio>
-              </HStack>
-            </RadioGroup>
-          </FormControl>
+          <HStack mt="2">
+            <FormControl as="fieldset">
+              <FormLabel as="legend">Moneda</FormLabel>
+              <RadioGroup value={moneda} onChange={(val) => setMoneda(val)}>
+                <HStack spacing="24px">
+                  <Radio value="pen">PEN</Radio>
+                  <Radio value="usd">USD</Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Tipo de factura</FormLabel>
+              <Select defaultValue="efectivo">
+                <option value="factura">Factura</option>
+                <option value="letra">Letra</option>
+                <option value="recibo">Recibo</option>
+              </Select>
+            </FormControl>
+          </HStack>
 
           <HStack mt="2">
             <FormControl>
@@ -108,8 +120,7 @@ export const Factura = () => {
               type="submit"
               mt="4"
               width="80%"
-              color="teal"
-              variant="outline"
+              colorScheme="teal"
               onClick={handleSubmit}
             >
               Enviar

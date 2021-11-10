@@ -12,19 +12,27 @@ export const CostesGastosIni = () => {
       </Heading>
       <FormControl>
         <FormLabel>Motivo Inicial Tipo</FormLabel>
-        <Select placeholder="Motivo Inicial Tipo">
-          <option value="estudio">Comision de Estudio</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+        <Select defaultValue="portes">
+          <option value="portes">Portes</option>
+          <option value="fotocopias">Fotocopias</option>
+          <option value="comisionEstudio">Comisión de estudio</option>
+          <option value="comisionDesembolso">Comisión de desembolso</option>
+          <option value="comisionIntermediacion">
+            Comisión de intermediación
+          </option>
+          <option value="gastosAdministracion">Gastos de administración</option>
+          <option value="gastosNotariales">Gastos notariales</option>
+          <option value="gastosRegistrales">Gastos registrales</option>
+          <option value="seguro">Seguro</option>
+          <option value="otrosPagos">Otros pagos</option>
         </Select>
       </FormControl>
       <HStack>
         <FormControl>
           <FormLabel>Motivo Inicial Valor</FormLabel>
-          <Select placeholder="Motivo Inicial Valor">
+          <Select defaultValue="efectivo">
             <option value="efectivo">En Efectivo</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            <option value="porcentaje">En Porcentaje</option>
           </Select>
         </FormControl>
         <FormControl isRequired>

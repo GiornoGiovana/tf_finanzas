@@ -8,23 +8,28 @@ export const CalculadorFacturas = () => {
   return (
     <Box>
       <Heading as="h3" size="md">
-        Calculador de Facturas
+        Tasa y Plazo
       </Heading>
       <FormControl>
-        <FormLabel>Dias año</FormLabel>
-        <Select placeholder="Dias año">
-          <option value="option1">360</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+        <FormLabel>Días por año</FormLabel>
+        <Select defaultValue={360}>
+          <option value={360}>360 días</option>
+          <option value={365}>365 días</option>
         </Select>
       </FormControl>
 
       <FormControl>
         <FormLabel>Plazo de tasa</FormLabel>
-        <Select placeholder="Plazo de Tasa">
-          <option value="option1">Anual </option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+        <Select defaultValue={360}>
+          <option value={1}>Diario</option>
+          <option value={15}>Quincenal</option>
+          <option value={30}>Mensual</option>
+          <option value={60}>Bimestral</option>
+          <option value={90}>Trimestral</option>
+          <option value={120}>Cuatrimestral</option>
+          <option value={180}>Semestral</option>
+          <option value={360}>Anual</option>
+          {/* <option value={360}>Especial</option> */}
         </Select>
       </FormControl>
 
