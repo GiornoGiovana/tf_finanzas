@@ -3,8 +3,15 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Heading, HStack } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
+import { useOperacion } from "../hooks/useOperacion";
 
 export const CostesGastosIni = () => {
+  const { _, setOperacion } = useOperacion();
+
+  const handleChange = (field, val) => {
+    setOperacion((p) => ({ ...p, [field]: val }));
+  };
+
   return (
     <Box>
       <Heading as="h3" size="md">
@@ -12,7 +19,10 @@ export const CostesGastosIni = () => {
       </Heading>
       <FormControl>
         <FormLabel>Motivo Inicial Tipo</FormLabel>
-        <Select defaultValue="portes">
+        <Select
+          defaultValue="portes"
+          onChange={(e) => handleChange("mit", e.target.value)}
+        >
           <option value="portes">Portes</option>
           <option value="fotocopias">Fotocopias</option>
           <option value="comisionEstudio">Comisión de estudio</option>
@@ -30,14 +40,17 @@ export const CostesGastosIni = () => {
       <HStack>
         <FormControl>
           <FormLabel>Motivo Inicial Valor</FormLabel>
-          <Select defaultValue="efectivo">
+          <Select
+            defaultValue="efectivo"
+            onChange={(e) => handleChange("miv", e.target.value)}
+          >
             <option value="efectivo">En Efectivo</option>
             <option value="porcentaje">En Porcentaje</option>
           </Select>
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Motivo Inicial Monto</FormLabel>
-          <Input />
+          <Input onChange={(e) => handleChange("mim", e.target.value)} />
         </FormControl>
       </HStack>
       <Button mt="2" variant="outline" colorScheme="teal">

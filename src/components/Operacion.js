@@ -9,9 +9,10 @@ import { useState } from "react";
 import { db } from "../firebase";
 import { useForm } from "../hooks/useForm";
 
-export const Factura = () => {
+export const Operacion = () => {
+  const [operacionTipo, setOperacionTipo] = useState("factura");
   const [moneda, setMoneda] = useState("pen");
-  const [facturaFields, handleChange] = useForm({
+  const [operacionFields, handleChange] = useForm({
     rucEmpresa: "",
     razonSocial: "",
     numeroFactura: "",
@@ -23,28 +24,30 @@ export const Factura = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "facturas"), {
-        ...facturaFields,
-        rucEmpresa: parseInt(facturaFields.rucEmpresa),
-        numeroFactura: parseInt(facturaFields.numeroFactura),
-        valorNominal: parseInt(facturaFields.valorNominal),
+      await addDoc(collection(db, "operaciones"), {
+        ...operacionFields,
+        tipoOperacion: operacionTipo,
+        rucEmpresa: parseInt(operacionFields.rucEmpresa),
+        numeroFactura: parseInt(operacionFields.numeroFactura),
+        valorNominal: parseInt(operacionFields.valorNominal),
         moneda,
       });
+      alert(`Se ha creado una nueva ${operacionTipo}`);
     } catch (error) {
-      console.error(e);
+      console.error(error);
     }
   };
 
   return (
     <Center>
       <Flex width="65%" direction="column">
-        <Heading color="teal.300">Ingresar Factura</Heading>
+        <Heading color="teal.300">Registrar Operación</Heading>
         <form>
           <FormControl isRequired mt="2">
             <FormLabel>RUC de la Empresa</FormLabel>
             <Input
               name="rucEmpresa"
-              value={facturaFields.rucEmpresa}
+              value={operacionFields.rucEmpresa}
               onChange={handleChange}
             />
           </FormControl>
@@ -52,15 +55,15 @@ export const Factura = () => {
             <FormLabel>Razon Social</FormLabel>
             <Input
               name="razonSocial"
-              value={facturaFields.razonSocial}
+              value={operacionFields.razonSocial}
               onChange={handleChange}
             />
           </FormControl>
           <FormControl isRequired mt="2">
-            <FormLabel>Numero de Factura</FormLabel>
+            <FormLabel>Número de Factura</FormLabel>
             <Input
               name="numeroFactura"
-              value={facturaFields.numeroFactura}
+              value={operacionFields.numeroFactura}
               onChange={handleChange}
             />
           </FormControl>
@@ -68,7 +71,7 @@ export const Factura = () => {
             <FormLabel>Valor Nominal</FormLabel>
             <Input
               name="valorNominal"
-              value={facturaFields.valorNominal}
+              value={operacionFields.valorNominal}
               onChange={handleChange}
             />
           </FormControl>
@@ -85,8 +88,11 @@ export const Factura = () => {
             </FormControl>
 
             <FormControl>
-              <FormLabel>Tipo de factura</FormLabel>
-              <Select defaultValue="efectivo">
+              <FormLabel>Tipo de Operación</FormLabel>
+              <Select
+                value={operacionTipo}
+                onChange={(val) => setOperacionTipo(val.target.value)}
+              >
                 <option value="factura">Factura</option>
                 <option value="letra">Letra</option>
                 <option value="recibo">Recibo</option>
@@ -100,7 +106,7 @@ export const Factura = () => {
               <Input
                 type="date"
                 name="fechaEmision"
-                value={facturaFields.fechaEmision}
+                value={operacionFields.fechaEmision}
                 onChange={handleChange}
               />
             </FormControl>
@@ -109,7 +115,7 @@ export const Factura = () => {
               <Input
                 type="date"
                 name="fechaPago"
-                value={facturaFields.fechaPago}
+                value={operacionFields.fechaPago}
                 onChange={handleChange}
               />
             </FormControl>
