@@ -2,9 +2,7 @@ import { Container, Flex } from "@chakra-ui/layout";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
 import { Operacion } from "./Operacion";
 import { HistorialOperaciones } from "./HistorialOperaciones";
-import { useUser } from "../hooks/useAuth";
-import { auth } from "../firebase";
-import { useEffect } from "react";
+import { CarteraOperaciones } from "./CarteraOperaciones";
 
 export const Home = () => {
   return (
@@ -25,7 +23,7 @@ export const Home = () => {
               <HistorialOperaciones />
             </TabPanel>
             <TabPanel>
-              <h1>Cartera de Facturas</h1>
+              <CarteraOperaciones />
             </TabPanel>
           </TabPanels>
         </Tabs>

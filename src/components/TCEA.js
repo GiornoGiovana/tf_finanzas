@@ -31,7 +31,7 @@ export const TCEA = () => {
         alert("No such document!");
       }
     })();
-  }, []);
+  }, [id]);
 
   const handleClick = () => {
     calcularTCEA(op, operacion, cgi, cgf, id);

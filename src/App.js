@@ -5,14 +5,10 @@ import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { TCEA } from "./components/TCEA";
-import { useAuth } from "./hooks/useAuth";
 import { OperacionContext } from "./hooks/useOperacion";
-import { Navigate } from "react-router";
 
 function App() {
   const [operacion, setOperacion] = useState({});
-
-  const user = useAuth();
 
   return (
     <div className="App">
@@ -21,16 +17,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          {user ? (
-            <Route path="/tcea/:id" element={<TCEA />} />
-          ) : (
-            <Route path="*" element={<Navigate to="/login" />} />
-          )}
-          {user ? (
-            <Route path="/" element={<Home />} />
-          ) : (
-            <Route path="*" element={<Navigate to="/login" />} />
-          )}
+          <Route path="/tcea/:id" element={<TCEA />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </OperacionContext.Provider>
     </div>
