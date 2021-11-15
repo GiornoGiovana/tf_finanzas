@@ -1,15 +1,20 @@
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Box, Heading, HStack } from "@chakra-ui/layout";
+import { Box, Flex, Heading, HStack, Text } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
-import { useOperacion } from "../hooks/useOperacion";
+import { useForm } from "../hooks/useForm";
 
-export const CostesGastosIni = () => {
-  const { _, setOperacion } = useOperacion();
+export const CostesGastosIni = ({ cgi, setCgi }) => {
+  const [values, handleChange, cleanValues] = useForm({
+    mit: "portes",
+    miv: "efectivo",
+    mim: "",
+  });
 
-  const handleChange = (field, val) => {
-    setOperacion((p) => ({ ...p, [field]: val }));
+  const handleClick = () => {
+    setCgi((p) => [...p, values]);
+    cleanValues();
   };
 
   return (
@@ -19,10 +24,7 @@ export const CostesGastosIni = () => {
       </Heading>
       <FormControl>
         <FormLabel>Motivo Inicial Tipo</FormLabel>
-        <Select
-          defaultValue="portes"
-          onChange={(e) => handleChange("mit", e.target.value)}
-        >
+        <Select name="mit" value={values.mit} onChange={handleChange}>
           <option value="portes">Portes</option>
           <option value="fotocopias">Fotocopias</option>
           <option value="comisionEstudio">Comisión de estudio</option>
@@ -40,22 +42,34 @@ export const CostesGastosIni = () => {
       <HStack>
         <FormControl>
           <FormLabel>Motivo Inicial Valor</FormLabel>
-          <Select
-            defaultValue="efectivo"
-            onChange={(e) => handleChange("miv", e.target.value)}
-          >
+          <Select name="miv" value={values.miv} onChange={handleChange}>
             <option value="efectivo">En Efectivo</option>
             <option value="porcentaje">En Porcentaje</option>
           </Select>
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Motivo Inicial Monto</FormLabel>
-          <Input onChange={(e) => handleChange("mim", e.target.value)} />
+          <Input name="mim" value={values.mim} onChange={handleChange} />
         </FormControl>
       </HStack>
-      <Button mt="2" variant="outline" colorScheme="teal">
-        Añadir
-      </Button>
+
+      <Flex align="center">
+        <Button
+          mt="2"
+          variant="outline"
+          colorScheme="teal"
+          onClick={handleClick}
+        >
+          Añadir
+        </Button>
+        <Flex>
+          {cgi.map((val, idx) => (
+            <Text key={idx} mx="2">
+              {val.mim}
+            </Text>
+          ))}
+        </Flex>
+      </Flex>
     </Box>
   );
 };

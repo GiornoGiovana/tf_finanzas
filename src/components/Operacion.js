@@ -6,26 +6,30 @@ import { Radio, RadioGroup } from "@chakra-ui/radio";
 import { Select } from "@chakra-ui/select";
 import { addDoc, collection } from "@firebase/firestore";
 import { useState } from "react";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import { useForm } from "../hooks/useForm";
 
 export const Operacion = () => {
+  const user = auth?.currentUser;
   const [operacionTipo, setOperacionTipo] = useState("factura");
   const [moneda, setMoneda] = useState("pen");
-  const [operacionFields, handleChange] = useForm({
+  const [operacionFields, handleChange, restartFields] = useForm({
     rucEmpresa: "",
     razonSocial: "",
     numeroFactura: "",
     valorNominal: "",
     fechaEmision: "",
     fechaPago: "",
+    retencion: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) return;
     try {
       await addDoc(collection(db, "operaciones"), {
         ...operacionFields,
+        userId: user.uid,
         tipoOperacion: operacionTipo,
         rucEmpresa: parseInt(operacionFields.rucEmpresa),
         numeroFactura: parseInt(operacionFields.numeroFactura),
@@ -33,6 +37,7 @@ export const Operacion = () => {
         moneda,
       });
       alert(`Se ha creado una nueva ${operacionTipo}`);
+      restartFields();
     } catch (error) {
       console.error(error);
     }
@@ -72,6 +77,15 @@ export const Operacion = () => {
             <Input
               name="valorNominal"
               value={operacionFields.valorNominal}
+              onChange={handleChange}
+            />
+          </FormControl>
+
+          <FormControl isRequired mt="2">
+            <FormLabel>Retencion</FormLabel>
+            <Input
+              name="retencion"
+              value={operacionFields.retencion}
               onChange={handleChange}
             />
           </FormControl>

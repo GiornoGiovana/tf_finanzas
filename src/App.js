@@ -1,28 +1,18 @@
-import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { TCEA } from "./components/TCEA";
-import { auth } from "./firebase";
+import { useAuth } from "./hooks/useAuth";
 import { OperacionContext } from "./hooks/useOperacion";
+import { Navigate } from "react-router";
 
 function App() {
   const [operacion, setOperacion] = useState({});
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        navigate("/login");
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  console.log("operacion: ", operacion);
+  const user = useAuth();
 
   return (
     <div className="App">
@@ -31,8 +21,16 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/tcea" element={<TCEA />} />
-          <Route path="/" element={<Home />} />
+          {user ? (
+            <Route path="/tcea/:id" element={<TCEA />} />
+          ) : (
+            <Route path="*" element={<Navigate to="/login" />} />
+          )}
+          {user ? (
+            <Route path="/" element={<Home />} />
+          ) : (
+            <Route path="*" element={<Navigate to="/login" />} />
+          )}
         </Routes>
       </OperacionContext.Provider>
     </div>

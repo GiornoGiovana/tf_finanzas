@@ -4,28 +4,35 @@ import { Button } from "@chakra-ui/button";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { collection, query, onSnapshot, orderBy } from "@firebase/firestore";
+import { collection, query, onSnapshot, where } from "@firebase/firestore";
 import { db } from "../firebase";
+import { useAuth } from "../hooks/useAuth";
 
 export const HistorialOperaciones = () => {
   const navigate = useNavigate();
   const [operaciones, setOperaciones] = useState([]);
+  const user = useAuth();
 
   useEffect(() => {
-    const q = query(
-      collection(db, "operaciones"),
-      orderBy("fechaEmision", "asc")
-    );
-    const unsub = onSnapshot(q, (docs) => {
-      docs.forEach((data) => {
-        setOperaciones((p) => [...p, data.data()]);
+    let unsub;
+    if (user) {
+      const q = query(
+        collection(db, "operaciones"),
+        where("userId", "==", user?.uid)
+      );
+      unsub = onSnapshot(q, (docs) => {
+        const arr = [];
+        docs.forEach((data) => {
+          arr.push({ ...data.data(), id: data.id });
+        });
+        setOperaciones([...arr]);
       });
-    });
+    }
     return unsub;
-  }, []);
+  }, [user]);
 
-  const handleClick = () => {
-    navigate("/tcea");
+  const handleClick = (id) => {
+    navigate(`/tcea/${id}`);
   };
 
   return (
@@ -62,7 +69,7 @@ export const HistorialOperaciones = () => {
                       size="sm"
                       variant="outline"
                       colorScheme="teal"
-                      onClick={handleClick}
+                      onClick={() => handleClick(operacion.id)}
                     >
                       Calcular TCEA
                     </Button>

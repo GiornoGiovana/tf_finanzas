@@ -3,10 +3,19 @@ import { Input } from "@chakra-ui/input";
 import { Box, Heading, HStack } from "@chakra-ui/layout";
 import { Radio, RadioGroup } from "@chakra-ui/radio";
 import { Select } from "@chakra-ui/select";
+import { useEffect } from "react";
 import { useOperacion } from "../hooks/useOperacion";
 
 export const CalculadorFacturas = () => {
   const { _, setOperacion } = useOperacion();
+
+  useEffect(() => {
+    setOperacion({
+      diasAnio: 360,
+      plazoTasa: 360,
+      tipoTasa: "efectiva",
+    });
+  }, []);
 
   const handleChange = (field, val) => {
     setOperacion((p) => ({ ...p, [field]: val }));

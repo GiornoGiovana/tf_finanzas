@@ -13,5 +13,8 @@ export const useForm = (formData) => {
         };
       });
     },
+    () => {
+      setState(formData);
+    },
   ];
 };

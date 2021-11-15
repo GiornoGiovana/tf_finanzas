@@ -2,6 +2,9 @@ import { Container, Flex } from "@chakra-ui/layout";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
 import { Operacion } from "./Operacion";
 import { HistorialOperaciones } from "./HistorialOperaciones";
+import { useUser } from "../hooks/useAuth";
+import { auth } from "../firebase";
+import { useEffect } from "react";
 
 export const Home = () => {
   return (
