@@ -72,10 +72,12 @@ const calcularTCEA = (op, operacion, cgi, cgf, docId) => {
   let fechPago = moment(op.fechaPago, "YYYY/MM/DD");
   let fechDesc = moment(operacion.fechaDescuento, "YYYY/MM/DD");
   let fechDiff = parseInt(fechPago.diff(fechDesc, "days"));
-  let numDias = parseInt(fechDiff / 86400000);
+  // let numDias = parseInt(fechDiff / 86400000);
+  let numDias = fechDiff;
 
-  let te =
-    Math.pow(1 + parseFloat(operacion.tasa) / 100, numDias / diasAnio) - 1;
+  let te = parseFloat(
+    Math.pow(1 + parseFloat(operacion.tasa) / 100, numDias / diasAnio) - 1
+  );
   let td = te / (1 + te);
 
   //Descuento
