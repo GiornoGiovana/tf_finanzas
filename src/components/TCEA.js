@@ -1,21 +1,35 @@
 import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
 import { Center, Grid } from "@chakra-ui/layout";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/modal";
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { db } from "../firebase";
 import { useOperacion } from "../hooks/useOperacion";
 import { CalculadorFacturas } from "./CalculadorFacturas";
 import { CostesGastosFin } from "./CostesGastosFin";
 import { CostesGastosIni } from "./CostesGastosIni";
 import { DatosFactura } from "./DatosFactura";
+import { Results } from "./Results";
 
 export const TCEA = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [cgi, setCgi] = useState([]);
   const [cgf, setCgf] = useState([]);
 
   const { operacion, _ } = useOperacion();
+  const navigate = useNavigate();
 
   const [op, setOp] = useState();
 
@@ -35,11 +49,34 @@ export const TCEA = () => {
 
   const handleClick = () => {
     calcularTCEA(op, operacion, cgi, cgf, id);
-    alert("Se ha calculado la TCEA vaya al historial");
+    onOpen();
   };
 
   return (
     <Center pt="4">
+      <Modal isOpen={isOpen} onClose={onClose} size="2xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Resultados</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Results id={id} />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="red" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="outline"
+              onClick={() => navigate("/")}
+            >
+              Home
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <form>
         <Grid templateColumns="repeat(2, 370px)" gap={4}>
           <DatosFactura op={op} />
@@ -122,6 +159,7 @@ const calcularTCEA = (op, operacion, cgi, cgf, docId) => {
     opeRef,
     {
       numDias,
+      tasa: parseFloat(operacion.tasa),
       tasaEfectiva: Math.round(te * 1000000000) / 10000000,
       tasaDescontada: Math.round(td * 1000000000) / 10000000,
       descuento: desct,
