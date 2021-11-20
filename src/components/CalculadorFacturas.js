@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useOperacion } from "../hooks/useOperacion";
 
 export const CalculadorFacturas = () => {
-  const { _, setOperacion } = useOperacion();
+  const { operacion, setOperacion } = useOperacion();
 
   useEffect(() => {
     setOperacion({
@@ -67,6 +67,26 @@ export const CalculadorFacturas = () => {
           </HStack>
         </RadioGroup>
       </FormControl>
+
+      {operacion.tipoTasa === "nominal" && (
+        <FormControl>
+          <FormLabel>Periodo de Cap.</FormLabel>
+          <Select
+            defaultValue={360}
+            onChange={(e) => handleChange("periodoCap", e.target.value)}
+          >
+            <option value={1}>Diario</option>
+            <option value={15}>Quincenal</option>
+            <option value={30}>Mensual</option>
+            <option value={60}>Bimestral</option>
+            <option value={90}>Trimestral</option>
+            <option value={120}>Cuatrimestral</option>
+            <option value={180}>Semestral</option>
+            <option value={360}>Anual</option>
+            {/* <option value={360}>Especial</option> */}
+          </Select>
+        </FormControl>
+      )}
 
       <HStack spacing="24px">
         <FormControl isRequired>

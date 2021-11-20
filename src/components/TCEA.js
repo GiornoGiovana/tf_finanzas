@@ -112,9 +112,21 @@ const calcularTCEA = (op, operacion, cgi, cgf, docId) => {
   // let numDias = parseInt(fechDiff / 86400000);
   let numDias = fechDiff;
 
-  let te = parseFloat(
-    Math.pow(1 + parseFloat(operacion.tasa) / 100, numDias / diasAnio) - 1
-  );
+  let te = 0;
+
+  if (operacion.tipoTasa === "nominal") {
+    let m = operacion.plazoTasa / operacion.periodoCap;
+    let n = numDias / operacion.periodoCap;
+    te = Math.pow(1 + parseFloat(operacion.tasa) / 100 / m, n) - 1;
+  } else {
+    te = parseFloat(
+      Math.pow(
+        1 + parseFloat(operacion.tasa) / 100,
+        numDias / operacion.plazoTasa
+      ) - 1
+    );
+  }
+
   let td = te / (1 + te);
 
   //Descuento

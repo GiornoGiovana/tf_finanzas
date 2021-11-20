@@ -29,11 +29,11 @@ export const Results = ({ id }) => {
             </Text>
             <Text>
               Tasa Efectiva a {data?.numDias} días:{" "}
-              {parseFloat(data?.tasaEfectiva) * 100}%
+              {parseFloat(data?.tasaEfectiva)}%
             </Text>
             <Text>
               Tasa Descontada a {data.numDias} días:{" "}
-              {parseFloat(data?.tasaDescontada) * 100}%
+              {parseFloat(data?.tasaDescontada)}%
             </Text>
             <Text>
               Descuento por {data.numDias} días: {parseFloat(data?.descuento)}
