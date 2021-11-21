@@ -7,7 +7,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { useForm } from "../hooks/useForm";
 
-export const Login = () => {
+export const Login = ({ setIsLogged }) => {
   const navigate = useNavigate();
   const [state, handleChange] = useForm({
     correo: "",
@@ -19,6 +19,7 @@ export const Login = () => {
     signInWithEmailAndPassword(auth, state.correo, state.password)
       .then((userCredential) => {
         console.log("User logged: ", userCredential);
+        setIsLogged(true);
         navigate("/");
       })
       .catch((error) => alert(error.message));

@@ -3,10 +3,16 @@ import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
 import { Operacion } from "./Operacion";
 import { HistorialOperaciones } from "./HistorialOperaciones";
 import { CarteraOperaciones } from "./CarteraOperaciones";
+import { useNavigate } from "react-router";
 
 //https://api.apis.net.pe/v1/tipo-cambio-sunat
 
-export const Home = () => {
+export const Home = ({ isLogged }) => {
+  const navigate = useNavigate();
+  if (!isLogged) {
+    navigate("/login");
+  }
+
   return (
     <Container maxW="100%">
       <Flex align="center">

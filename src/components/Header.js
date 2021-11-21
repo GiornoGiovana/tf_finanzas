@@ -4,9 +4,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { auth } from "../firebase";
 
-export const Header = () => {
+export const Header = ({ setIsLogged }) => {
   const user = useAuth();
   const handleLogout = () => {
+    setIsLogged(false);
     signOut(auth);
   };
 

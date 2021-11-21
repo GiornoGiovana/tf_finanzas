@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "@firebase/auth";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { auth } from "../firebase";
 
 export const useAuth = () => {

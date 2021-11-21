@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { auth, db } from "../firebase";
 import { addDoc, collection } from "@firebase/firestore";
 
-export const Signup = () => {
+export const Signup = ({ setIsLogged }) => {
   const navigate = useNavigate();
   const [state, handleChange] = useForm({
     nombre: "",
@@ -36,6 +36,7 @@ export const Signup = () => {
             ruc: parseInt(state.ruc),
           });
           if (docRef.id) {
+            setIsLogged(true);
             navigate("/");
           }
         } catch (e) {
