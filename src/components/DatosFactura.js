@@ -9,15 +9,25 @@ export const DatosFactura = ({ op }) => {
         Datos de {op?.tipoOperacion}
       </Heading>
       <FormControl>
-        <FormLabel>Fecha de Emision</FormLabel>
+        <FormLabel>
+          Fecha de {op?.tipoOperacion === "letra" ? "Giro" : "Emisión"}
+        </FormLabel>
         <Input type="date" value={op?.fechaEmision} disabled />
       </FormControl>
       <FormControl>
-        <FormLabel>Fecha de Pago</FormLabel>
+        <FormLabel>
+          Fecha de {op?.tipoOperacion === "letra" ? "Vencimiento" : "Pago"}
+        </FormLabel>
         <Input type="date" value={op?.fechaPago} disabled />
       </FormControl>
       <FormControl>
-        <FormLabel>Monto</FormLabel>
+        <FormLabel>
+          {op?.tipoOperacion === "factura"
+            ? "Total Facturado"
+            : op?.tipoOperacion === "letra"
+            ? "Valor Nominal"
+            : "Total a Recibir"}
+        </FormLabel>
         <Input value={op?.valorNominal} disabled />
       </FormControl>
       <FormControl>

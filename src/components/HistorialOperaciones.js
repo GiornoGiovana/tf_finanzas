@@ -43,7 +43,7 @@ export const HistorialOperaciones = () => {
           <Thead>
             <Tr>
               <Th>Tipo de Operacion</Th>
-              <Th>Fecha de Emision</Th>
+              <Th>Fecha de Emision o giro</Th>
               <Th>Nombre de la Empresa</Th>
               <Th>Monto</Th>
               <Th>Fecha de Pago</Th>
@@ -57,7 +57,7 @@ export const HistorialOperaciones = () => {
                 <Td>{operacion.fechaEmision}</Td>
                 <Td>{operacion.razonSocial}</Td>
                 <Td>
-                  {operacion.moneda === "pen" ? "S" : "$"}
+                  {operacion.moneda === "pen" ? "S/" : "$/"}
                   {operacion.valorNominal}
                 </Td>
                 <Td>{operacion.fechaPago}</Td>

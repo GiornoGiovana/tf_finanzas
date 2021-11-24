@@ -22,7 +22,7 @@ import { CostesGastosIni } from "./CostesGastosIni";
 import { DatosFactura } from "./DatosFactura";
 import { Results } from "./Results";
 
-export const TCEA = ({ isLogged }) => {
+export const TCEA = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [cgi, setCgi] = useState([]);
@@ -51,10 +51,6 @@ export const TCEA = ({ isLogged }) => {
     calcularTCEA(op, operacion, cgi, cgf, id);
     onOpen();
   };
-
-  if (!isLogged) {
-    navigate("/login");
-  }
 
   return (
     <Center pt="4">

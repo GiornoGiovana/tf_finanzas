@@ -56,7 +56,7 @@ export const CostesGastosFin = ({ cgf, setCgf }) => {
         <Flex>
           {cgf.map((val, idx) => (
             <Text key={idx} mx="2">
-              {val.mfm}
+              {val.mft}: {val.mfm}
             </Text>
           ))}
         </Flex>

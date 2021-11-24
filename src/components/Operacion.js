@@ -1,11 +1,11 @@
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Center, Flex, Heading, HStack } from "@chakra-ui/layout";
+import { Box, Center, Flex, Heading, HStack } from "@chakra-ui/layout";
 import { Radio, RadioGroup } from "@chakra-ui/radio";
 import { Select } from "@chakra-ui/select";
 import { addDoc, collection } from "@firebase/firestore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
 import { useForm } from "../hooks/useForm";
 
@@ -13,6 +13,7 @@ export const Operacion = () => {
   const user = auth?.currentUser;
   const [operacionTipo, setOperacionTipo] = useState("factura");
   const [moneda, setMoneda] = useState("pen");
+  const [dolar, setDolar] = useState(null);
   const [operacionFields, handleChange, restartFields] = useForm({
     rucEmpresa: "",
     razonSocial: "",
@@ -22,6 +23,14 @@ export const Operacion = () => {
     fechaPago: "",
     retencion: "",
   });
+
+  useEffect(() => {
+    if (moneda === "usd") {
+      (async () => {
+        // setDolar(compra);
+      })();
+    }
+  }, [moneda]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +74,7 @@ export const Operacion = () => {
             />
           </FormControl>
           <FormControl isRequired mt="2">
-            <FormLabel>Número de Factura</FormLabel>
+            <FormLabel>Número de Operación</FormLabel>
             <Input
               name="numeroFactura"
               value={operacionFields.numeroFactura}
@@ -97,6 +106,7 @@ export const Operacion = () => {
                 <HStack spacing="24px">
                   <Radio value="pen">PEN</Radio>
                   <Radio value="usd">USD</Radio>
+                  {moneda === "usd" && <Box>${dolar}</Box>}
                 </HStack>
               </RadioGroup>
             </FormControl>
@@ -116,7 +126,7 @@ export const Operacion = () => {
 
           <HStack mt="2">
             <FormControl>
-              <FormLabel>Fecha de emision</FormLabel>
+              <FormLabel>Fecha de emision o giro</FormLabel>
               <Input
                 type="date"
                 name="fechaEmision"

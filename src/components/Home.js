@@ -20,7 +20,7 @@ export const Home = ({ isLogged }) => {
           <TabList>
             <Tab>Registro de Operación</Tab>
             <Tab>Historial de Operaciones</Tab>
-            <Tab>Cartera de Facturas</Tab>
+            <Tab>Cartera de Operaciones</Tab>
           </TabList>
 
           <TabPanels flex="1">

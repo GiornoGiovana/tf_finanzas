@@ -21,7 +21,7 @@ export const Header = ({ setIsLogged }) => {
     >
       <Link as={RouterLink} to="/" color="teal">
         <Heading as="h3" size="lg">
-          My Wallet
+          Virtual Wallet
         </Heading>
       </Link>
 

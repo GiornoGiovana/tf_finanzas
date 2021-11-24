@@ -65,7 +65,7 @@ export const CostesGastosIni = ({ cgi, setCgi }) => {
         <Flex>
           {cgi.map((val, idx) => (
             <Text key={idx} mx="2">
-              {val.mim}
+              {val.mit}: {val.mim}
             </Text>
           ))}
         </Flex>
