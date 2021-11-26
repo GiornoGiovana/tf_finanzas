@@ -5,7 +5,7 @@ import { Box, Center, Flex, Heading, HStack } from "@chakra-ui/layout";
 import { Radio, RadioGroup } from "@chakra-ui/radio";
 import { Select } from "@chakra-ui/select";
 import { addDoc, collection } from "@firebase/firestore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { db, auth } from "../firebase";
 import { useForm } from "../hooks/useForm";
 
@@ -23,14 +23,6 @@ export const Operacion = () => {
     fechaPago: "",
     retencion: "",
   });
-
-  useEffect(() => {
-    if (moneda === "usd") {
-      (async () => {
-        // setDolar(compra);
-      })();
-    }
-  }, [moneda]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +98,6 @@ export const Operacion = () => {
                 <HStack spacing="24px">
                   <Radio value="pen">PEN</Radio>
                   <Radio value="usd">USD</Radio>
-                  {moneda === "usd" && <Box>${dolar}</Box>}
                 </HStack>
               </RadioGroup>
             </FormControl>

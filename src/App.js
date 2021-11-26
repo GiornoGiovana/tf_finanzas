@@ -70,7 +70,7 @@ const Forbidden = () => {
           </clipPath>
           <text id="text-s" class="error-text" y="106">
             {" "}
-            403{" "}
+            404{" "}
           </text>
         </defs>
         <path
@@ -110,9 +110,9 @@ const Forbidden = () => {
           <use xlinkHref="#tornillo" y="60"></use>
         </g>
       </svg>
-      <h1>You are not allowed to enter here</h1>
+      <h1>Page not Found</h1>
       <h2>
-        Go <Link to="/">Home!</Link>
+        Go <a href="https://giornogiovana.github.io/">Home!</a>
       </h2>
     </div>
   );

@@ -28,7 +28,7 @@ export const Login = ({ setIsLogged }) => {
   return (
     <Center h="lg">
       <Container flex>
-        <Heading m="auto" w="fit-content" color="blackAlpha.300">
+        <Heading m="auto" w="fit-content" color="teal">
           Iniciar Sesion
         </Heading>
         <form>

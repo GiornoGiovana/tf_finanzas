@@ -20,14 +20,16 @@ export const Header = ({ setIsLogged }) => {
       px="24"
     >
       <Link as={RouterLink} to="/" color="teal">
-        <Heading as="h3" size="lg">
-          Virtual Wallet
-        </Heading>
+        <img
+          style={{ height: 50, width: 235 }}
+          src="/logoFinanzas.png"
+          alt="logo"
+        />
       </Link>
 
       {user && (
         <Flex align="center" gridGap="4" className="header__avatar">
-          <Heading as="h5" size="md" color="whitesmoke">
+          <Heading as="h5" size="md" color="rgb(99, 179, 237)">
             {user?.displayName}
           </Heading>
           <Avatar bg="teal.500" size="md" onClick={handleLogout} />

@@ -49,7 +49,7 @@ export const Signup = ({ setIsLogged }) => {
   return (
     <Center>
       <Container flex minW="fit-content">
-        <Heading mx="auto" mt="4" w="fit-content" color="blackAlpha.300">
+        <Heading mx="auto" mt="4" w="fit-content" color="teal">
           Registro
         </Heading>
         <form>
